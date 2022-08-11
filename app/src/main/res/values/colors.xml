@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="newPrimary">#3a6531</color>
+    <color name="light_black">#FFAAAAAA</color>
+    <color name="lblNotice">#FFcd210c</color>
+    <color name="tvQuestionNotSelected">#FF333333</color>
+    <color name="lightPrimary">#EE7caa71</color>
+    <color name="selectedColor">#FFfef200</color>
+</resources>
