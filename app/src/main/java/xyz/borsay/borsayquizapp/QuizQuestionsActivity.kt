@@ -1,19 +1,16 @@
 package xyz.borsay.borsayquizapp
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import org.w3c.dom.Text
-import java.lang.reflect.Type
-import java.util.*
 import kotlin.collections.ArrayList
 
 class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener{
@@ -21,6 +18,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener{
     private var mQuestionsList: ArrayList<Question>? = null
     private var mCorrectPosition: Int = 0
     private var mGuessedCorrect: Boolean = false
+    private var mFirstGuess: Boolean = true
     private var mSelectedOptionPosition: Int = 0
     private  lateinit var tvOptionOne : TextView
     private lateinit var tvOptionTwo  : TextView
@@ -31,6 +29,11 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener{
     private lateinit var ivCurrentImage:  ImageView
     private lateinit var tvCurrentQuestion: TextView
     private lateinit var btnSubmit: Button
+    private var mUserName : String? = null
+
+    private  var mNumberCorrect: Int = 0
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +42,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener{
         mQuestionsList = Constants.getQuestions()
         mQuestionsList!!.shuffle()
 
+        mUserName = intent.getStringExtra(Constants.USER_NAME)
 
         tvCurrentQuestion = findViewById(R.id.tvCurrentQuestion)
         tvOptionFour = findViewById(R.id.tvOptionFour)
@@ -77,7 +81,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener{
             Pair(4, question.optionFour) )
 
         options.shuffle()
-
+        mFirstGuess = true
 
         mCorrectPosition = question.correctAnswer
 
@@ -181,6 +185,14 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener{
                             defaultOptionsView()
                             setQuestion()
                         }
+                        else ->{
+                            val intent = Intent(this, FinishedQuiz::class.java)
+                            intent.putExtra(Constants.USER_NAME, mUserName)
+                            intent.putExtra(Constants.TOTAL_QUESTIONS, mQuestionsList!!.size.toString())
+                            intent.putExtra(Constants.CORRECT_ANSWERS, mNumberCorrect.toString())
+                            startActivity(intent)
+                            finish()
+                        }
                     }
                 }else{
                     mGuessedCorrect = false
@@ -235,14 +247,18 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener{
                     else R.drawable.correct_option_box )
             }
         }
+
         if(mGuessedCorrect){
             mSelectedOptionPosition=0
+            if(mFirstGuess)
+                mNumberCorrect++
             if(mCurrentPosition < mQuestionsList!!.size)
                 btnSubmit.text = "Correct, go to Next Question!"
             else{
                 btnSubmit.text = "Correct, You have finished!"
             }
         }else{
+            mFirstGuess = false
             btnSubmit.text = "Incorrect, please try again!"
         }
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/lighter_yellow"
+    android:background="@drawable/blue_backgound"
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".MainActivity">
@@ -59,8 +59,8 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:hintTextColor="@color/light_black"
-                app:boxStrokeColor="@color/light_black">
+                app:boxStrokeColor="@color/light_black"
+                app:hintTextColor="@color/light_black">
 
                 <androidx.appcompat.widget.AppCompatEditText
 
@@ -82,7 +82,7 @@
                 android:background="@color/design_default_color_primary"
                 android:text="Start"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="18sp" />
         </LinearLayout>
 
